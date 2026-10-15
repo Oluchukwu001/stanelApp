@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import stanel.app.store.profile.services.GetUserStores;
-import stanel.app.store.store.Store;
 import stanel.app.store.store.StoreMapper;
 import stanel.app.store.store.StoreResponseDTO;
 import stanel.app.store.user.dtos.Response;
