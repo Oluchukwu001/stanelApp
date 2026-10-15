@@ -7,24 +7,25 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import stanel.app.store.profile.Profile;
 import stanel.app.store.profile.ProfileRespository;
+import stanel.app.store.profile.dto.UpdatePasswordRequestDTO;
 import stanel.app.store.user.User;
 import stanel.app.store.util.ServiceUtil;
 import stanel.app.store.util.ValidationUtil;
 
-@Service
+@Service 
 @RequiredArgsConstructor
 public class UpdateUserPassword {
     private final PasswordEncoder passwordEncoder;
     private final ProfileRespository profileRespository;
 
-    public String updateUserPassword(Long profileId, String oldPassword, String newPassword) {
-        validatePasswordUpdateCredentials(profileId, newPassword);
+    public String updateUserPassword(Long profileId, UpdatePasswordRequestDTO requestDTO) {
+        validatePasswordUpdateCredentials(profileId, requestDTO.newPassword());
         Profile profile = fetchUserProfile(profileId);
         User user = profile.getUser();
-        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+        if (!passwordEncoder.matches(requestDTO.oldPassword(), user.getPassword())) {
             throw new BadCredentialsException("Incorrect old password");
         }
-        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setPassword(passwordEncoder.encode(requestDTO.newPassword()));
         profileRespository.save(profile);
         return "Password successfully updated";
 
@@ -40,3 +41,4 @@ public class UpdateUserPassword {
     }
 
 }
+

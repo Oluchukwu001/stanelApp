@@ -13,8 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import stanel.app.store.buyers.StoreOwner;
-import stanel.app.store.staff.Staff;
+import stanel.app.store.profile.Profile;
 import stanel.app.store.util.BaseEntity;
 
 @Entity 
@@ -33,8 +32,8 @@ public class Company extends  BaseEntity{
     private String phoneNumber;
     private String address;
     @OneToMany (mappedBy = "company", fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Staff> companyWorkers;
+    private List<Profile> companyWorkers;
     @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<StoreOwner> storeOwners;
+    private List<Profile> storeOwners;
     
 }

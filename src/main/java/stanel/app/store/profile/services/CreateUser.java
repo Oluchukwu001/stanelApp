@@ -1,4 +1,4 @@
-package stanel.app.store.profile;
+package stanel.app.store.profile.services;
 
 import java.util.List;
 
@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import stanel.app.store.exception.BadRequestException;
+import stanel.app.store.profile.Profile;
+import stanel.app.store.profile.ProfileRespository;
 import stanel.app.store.profile.dto.ProfileRequestDTO;
 import stanel.app.store.user.User;
 import stanel.app.store.user.UserRepository;

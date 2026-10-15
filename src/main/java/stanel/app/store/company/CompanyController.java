@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import stanel.app.store.buyers.StoreOwnerResponseDTO;
-import stanel.app.store.staff.StaffResponseDTO;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -61,16 +60,6 @@ public class CompanyController {
         return companyService.getAllCompanies(page, size).map(companyMapper::toDto);
     }
 
-    @GetMapping ("/{id}/company-staff")
-    @ResponseStatus (HttpStatus.OK)
-    public List<StaffResponseDTO> findStaffBycompanyIdOrderByRoleDESC(@RequestParam Long id){
-        return companyMapper.toStaffResponseDTO(companyService.findStaffBycompanyIdOrderByRoleDESC(id));
-    }
-
-    @GetMapping("/{id}/store-owners")
-    @ResponseStatus (HttpStatus.OK)
-    public List<StoreOwnerResponseDTO> findStoreOwnerByCompanyIdOrderByNameDesc(@RequestParam Long id){
-        return  companyMapper.toStoreOwners(companyService.findStoreOwnerByCompanyIdOrderByNameDesc(id));
-
-    }
+    
+   
 }

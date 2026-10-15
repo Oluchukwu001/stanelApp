@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import stanel.app.store.company.Company;
 import stanel.app.store.store.Store;
 import stanel.app.store.user.User;
 import stanel.app.store.user.enums.Role;
@@ -44,4 +45,6 @@ public class Profile extends BaseEntity {
 
     @OneToMany(mappedBy = "profile")
     private List<Store> stores = new ArrayList<>();
+
+    private Company company;
 }

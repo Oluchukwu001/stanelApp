@@ -42,7 +42,7 @@ public class UpdateProfile {
 
     private List<Store> fetchStore(List<Long> storeIds) {
         List<Store> stores = new ArrayList<>();
-        if (!storeIds.isEmpty() && storeIds != null) {
+        if (storeIds != null && !storeIds.isEmpty()) {
             stores = storeIds.stream().filter(Objects::nonNull).map(el -> {
                 return ServiceUtil.findOrThrow(storeRepository, el, "Store");
             }).toList();

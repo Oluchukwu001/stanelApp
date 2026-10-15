@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import stanel.app.store.buyers.StoreOwner;
-import stanel.app.store.staff.Staff;
+
 import stanel.app.store.util.ServiceUtil;
 import stanel.app.store.util.ValidationUtil;
 
@@ -69,14 +68,7 @@ public class CompanyService {
         Pageable pageable = PageRequest.of(page,size);
         return companyRepository.findAll(pageable);
     }
-    @Transactional (readOnly = true)
-    public List<Staff> findStaffBycompanyIdOrderByRoleDESC(Long id){
-        return companyRepository.findStaffByCompanyIdOrderByRoleDesc(id);
-    }
-    @Transactional (readOnly = true)
-    public List<StoreOwner> findStoreOwnerByCompanyIdOrderByNameDesc(Long id){
-        return  companyRepository.findStoreOwnersByCompanyIdOrderByName(id);
-    }
+    
     private void validateCompanyRequestDTO(CompanyRequestDTO requestDTO) {
         ValidationUtil.requireNonBlank(requestDTO.name(), "Name is required");
         ValidationUtil.requireNonBlank(requestDTO.address(), "Address is required");
