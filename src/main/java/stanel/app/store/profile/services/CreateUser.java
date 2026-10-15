@@ -38,7 +38,7 @@ public class CreateUser {
         User user = new User(requestDTO.email(), hashedPassword, requestDTO.role());
 
         // create profile and link user
-        Profile profile = new Profile(requestDTO.firstName(), requestDTO.lastName(), requestDTO.phoneNumber(),requestDTO.gender(), user, user.getRole(), List.of());
+        Profile profile = new Profile(requestDTO.firstName(), requestDTO.lastName(), requestDTO.phoneNumber(),requestDTO.gender(), user, user.getRole(), List.of(),);
         
         // Save User  
         return profileRespository.save(profile);

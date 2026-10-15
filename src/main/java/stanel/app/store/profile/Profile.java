@@ -6,7 +6,9 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -33,7 +35,7 @@ public class Profile extends BaseEntity {
 
     @Column(unique = true)
     private String phoneNumber;
-    
+
     @Column(nullable = false)
     private String gender;
 
@@ -46,5 +48,8 @@ public class Profile extends BaseEntity {
     @OneToMany(mappedBy = "profile")
     private List<Store> stores = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
     private Company company;
+
 }

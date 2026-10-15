@@ -13,7 +13,7 @@ import stanel.app.store.profile.dto.ProfileResponseDTO;
 import stanel.app.store.profile.services.GetStaffs;
 
 @RestController
-@RequestMapping("/api/v1/profiles")
+@RequestMapping("/api/v1/staff-profiles")
 @RequiredArgsConstructor
 public class GetStaffsController {
 
