@@ -1,19 +1,19 @@
 package stanel.app.store.store;
 
-
-
+import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import stanel.app.store.buyers.StoreOwner;
-import stanel.app.store.buyers.StoreOwnerRepository;
 import stanel.app.store.cart.Cart;
 import stanel.app.store.order.Order;
 
 import stanel.app.store.order.OrderResponseDTO;
+import stanel.app.store.profile.Profile;
+import stanel.app.store.profile.ProfileRepository;
+import stanel.app.store.user.enums.Role;
 import stanel.app.store.util.ServiceUtil;
 import stanel.app.store.util.ValidationUtil;
 
@@ -21,13 +21,15 @@ import stanel.app.store.util.ValidationUtil;
 @RequiredArgsConstructor
 public class StoreService {
     private final StoreRepository storeRepository;
-    private final StoreOwnerRepository storeOwnerRepository;
-   
+    private final ProfileRepository profileRepository;;
 
     // CREATE STORE AND SETTING CORRESPONDING ATTRIBUTES
-    public Store createStore(StoreRequestDTO requestDTO) {
+    public Store createStore(StoreRequestDTO requestDTO) throws BadRequestException {
         validateStoreRequestDto(requestDTO);
-        StoreOwner storeOwner = ServiceUtil.findOrThrow(storeOwnerRepository, requestDTO.storeOwnerId(), "StoreOwner");
+        Profile storeOwner = ServiceUtil.findOrThrow(profileRepository, requestDTO.storeOwnerId(), "StoreOwner");
+        if (!storeOwner.getRole().equals(Role.STOREOWNER)) {
+            throw new BadRequestException("This user is not a store owner");
+        }
         Store store = new Store();
         Cart cart = new Cart();
         store.setName(requestDTO.name());
@@ -41,10 +43,13 @@ public class StoreService {
     }
 
     // TO UPDATE STORE ATTRIBUTES AND VALIDATE INPUT(REQUEST DTO)
-    public Store updateStore(Long id, StoreRequestDTO requestDTO) {
+    public Store updateStore(Long id, StoreRequestDTO requestDTO) throws BadRequestException {
         ValidationUtil.requirePositive(id, "Id must be positive");
         ValidationUtil.requirePositive(requestDTO.storeOwnerId(), "Store owner id must be positive");
-        StoreOwner storeOwner = ServiceUtil.findOrThrow(storeOwnerRepository, requestDTO.storeOwnerId(), "StoreOwner");
+        Profile storeOwner = ServiceUtil.findOrThrow(profileRepository, requestDTO.storeOwnerId(), "StoreOwner");
+        if (!storeOwner.getRole().equals(Role.STOREOWNER)) {
+            throw new BadRequestException("This user is not a store owner");
+        }
         Store store = ServiceUtil.findOrThrow(storeRepository, id, "Store");
         ServiceUtil.setIfPresent(requestDTO.name(), store::setName);
         if (!requestDTO.email().isBlank() && !requestDTO.email().isEmpty()) {

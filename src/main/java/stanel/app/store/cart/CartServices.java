@@ -24,7 +24,7 @@ public class CartServices {
     private final CartRepository cartRepository;
     private final StoreRepository storeRepository;
     private final CartItemRepository cartItemRepository;
-    private final CartMapper cartMapper;
+   
 
     @Transactional
     public CartDTO addToCart(CartRequestDTO requestDTO) {
@@ -47,7 +47,7 @@ public class CartServices {
         }
         recalculateTotals(cart);
         cartRepository.save(cart);
-        return cartMapper.toCartDTO(cart);
+        return CartDTO.mapCartDTO(cart);
 
     }
 
@@ -67,7 +67,7 @@ public class CartServices {
         }
         recalculateTotals(cart);
         cartRepository.save(cart);
-        return cartMapper.toCartDTO(cart);
+        return CartDTO.mapCartDTO(cart);
 
     }
 

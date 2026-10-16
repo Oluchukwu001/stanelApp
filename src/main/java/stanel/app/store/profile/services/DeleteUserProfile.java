@@ -4,18 +4,18 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import stanel.app.store.exception.NotFoundException;
-import stanel.app.store.profile.ProfileRespository;
+import stanel.app.store.profile.ProfileRepository;
 
 @Service
 @RequiredArgsConstructor
 public class DeleteUserProfile {
-    private final ProfileRespository profileRespository;
+    private final ProfileRepository profileRepository;
 
     public String deleteUserProfile(Long profileId) {
-        if (!profileRespository.existsById(profileId)) {
+        if (!profileRepository.existsById(profileId)) {
             throw new NotFoundException("User profile not found");
         }
-        profileRespository.deleteById(profileId);
+        profileRepository.deleteById(profileId);
         return "User profile deleted successfully";
     }
 

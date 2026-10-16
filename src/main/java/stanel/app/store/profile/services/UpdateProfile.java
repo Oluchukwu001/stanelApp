@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import stanel.app.store.profile.Profile;
-import stanel.app.store.profile.ProfileRespository;
+import stanel.app.store.profile.ProfileRepository;
 import stanel.app.store.profile.dto.ProfileRequestDTO;
 import stanel.app.store.store.Store;
 import stanel.app.store.store.StoreRepository;
@@ -19,7 +19,7 @@ import stanel.app.store.util.ServiceUtil;
 @Service
 @RequiredArgsConstructor
 public class UpdateProfile {
-    private final ProfileRespository profileRespository;
+    private final ProfileRepository profileRespository;
     private final StoreRepository storeRepository;
 
     public Profile updateProfile(Long id, ProfileRequestDTO requestDTO) {

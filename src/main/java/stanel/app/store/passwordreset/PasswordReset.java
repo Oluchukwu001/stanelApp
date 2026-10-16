@@ -19,7 +19,7 @@ import stanel.app.store.util.BaseEntity;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PasswordRest extends BaseEntity {
+public class PasswordReset extends BaseEntity {
     @Column(nullable = false, unique = true, length = 64)
     private String token;
 
@@ -30,6 +30,6 @@ public class PasswordRest extends BaseEntity {
     boolean used = false;
 
     @ManyToOne (fetch = FetchType.LAZY,optional = false)
-    @JoinColumn (name = "staff_id",nullable = false)
+    @JoinColumn (name = "profile_id",nullable = false)
     private Profile profile;
 }

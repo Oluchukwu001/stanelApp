@@ -1,5 +1,6 @@
 package stanel.app.store.store;
 
+import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +29,7 @@ public class StoreController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public StoreResponseDTO createStore(
-            @RequestBody StoreRequestDTO requestDTO) {
+            @RequestBody StoreRequestDTO requestDTO) throws BadRequestException {
 
         return storeMapper.toStoreResponseDTO(
                 storeService.createStore(requestDTO));
@@ -39,7 +40,7 @@ public class StoreController {
     @ResponseStatus(HttpStatus.OK)
     public StoreResponseDTO updateStore(
             @PathVariable Long id,
-            @RequestBody StoreRequestDTO requestDTO) {
+            @RequestBody StoreRequestDTO requestDTO) throws BadRequestException {
 
         return storeMapper.toStoreResponseDTO(
                 storeService.updateStore(id, requestDTO));

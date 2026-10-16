@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import stanel.app.store.profile.Profile;
-import stanel.app.store.profile.ProfileRespository;
+import stanel.app.store.profile.ProfileRepository;
 import stanel.app.store.profile.dto.UpdatePasswordRequestDTO;
 import stanel.app.store.user.User;
 import stanel.app.store.util.ServiceUtil;
@@ -16,7 +16,7 @@ import stanel.app.store.util.ValidationUtil;
 @RequiredArgsConstructor
 public class UpdateUserPassword {
     private final PasswordEncoder passwordEncoder;
-    private final ProfileRespository profileRespository;
+    private final ProfileRepository profileRespository;
 
     public String updateUserPassword(Long profileId, UpdatePasswordRequestDTO requestDTO) {
         validatePasswordUpdateCredentials(profileId, requestDTO.newPassword());

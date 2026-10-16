@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import stanel.app.store.exception.NotFoundException;
 import stanel.app.store.profile.Profile;
-import stanel.app.store.profile.ProfileRespository;
+import stanel.app.store.profile.ProfileRepository;
 import stanel.app.store.store.Store;
 import stanel.app.store.util.ServiceUtil;
 
 @RequiredArgsConstructor
 @Service 
 public class GetUserStores {
-    private final ProfileRespository profileRespository;
+    private final ProfileRepository profileRespository;
 
     public List<Store> getUserStore(Long id) {
         Profile userProfile = fetchUserProfile(id);

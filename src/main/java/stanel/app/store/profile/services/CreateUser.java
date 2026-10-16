@@ -10,7 +10,7 @@ import stanel.app.store.company.Company;
 import stanel.app.store.company.CompanyRepository;
 import stanel.app.store.exception.BadRequestException;
 import stanel.app.store.profile.Profile;
-import stanel.app.store.profile.ProfileRespository;
+import stanel.app.store.profile.ProfileRepository;
 import stanel.app.store.profile.dto.ProfileRequestDTO;
 import stanel.app.store.user.User;
 import stanel.app.store.user.UserRepository;
@@ -21,7 +21,7 @@ import stanel.app.store.util.ValidationUtil;
 @RequiredArgsConstructor
 public class CreateUser {
     private final UserRepository userRepository;
-    private final ProfileRespository profileRespository;
+    private final ProfileRepository profileRepository;
     private final PasswordEncoder passwordEncoder;
     private final CompanyRepository companyRepository;
 
@@ -47,7 +47,7 @@ public class CreateUser {
         
        
         // Save User  
-        return profileRespository.save(profile);
+        return profileRepository.save(profile);
     }
 
     private void validateDTO(ProfileRequestDTO requestDTO) {

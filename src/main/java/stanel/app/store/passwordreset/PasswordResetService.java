@@ -1,36 +1,56 @@
 package stanel.app.store.passwordreset;
 
+import java.security.SecureRandom;
+import java.time.Instant;
+import java.util.Base64;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service
+import lombok.RequiredArgsConstructor;
+import stanel.app.store.profile.Profile;
+import stanel.app.store.profile.ProfileRepository;
+
+@Service 
+@RequiredArgsConstructor 
 public class PasswordResetService {
-    private final JavaMailSender mailSender;
+    private final ProfileRepository profileRepository;
+    private final PasswordRestRepository passwordResetRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final SendPasswordRestLinkService sendPasswordRestLinkService;
 
-    @Value("${spring.mail.username}")
-    private String fromMail;
+    private final SecureRandom secureRandom = new SecureRandom();
+    @Value ("${app.password-reset-url}")
+    private final String passwordResetUrl;
+    @Transactional 
+    public void forgotPassword(String email){
+        Profile profile = profileRepository.findByUser_EmailIgnoreCase(email).orElse(null);
+        if(profile==null){
+            return ;
+        }
 
-    public PasswordResetService(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
+        List<PasswordReset> oldToken = passwordResetRepository.findAllByProfileAndUsedFalse(profile);
+        oldToken.forEach(el->el.setUsed(true));
+
+        byte[] randomByte = new byte[32];
+        secureRandom.nextBytes(randomByte);
+
+        String rawToken = Base64.getUrlEncoder().withoutPadding().encodeToString(randomByte);
+
+        PasswordReset rest = new PasswordReset();
+        rest.setToken(rawToken);
+        rest.setProfile(profile);
+        rest.setExpiresAt(Instant.now().plusSeconds(900));
+        rest.setUsed(false);
+        
+        passwordResetRepository.save(rest);
+
+        String ResetLink = passwordResetUrl + "?Token="+ rawToken;
+
+        sendPasswordRestLinkService.sendPasswordRestLink(profile.getUser().getEmail(), ResetLink);
     }
-
-    public void sendPasswordRestLink(String email, String resetLink) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(fromMail);
-        message.setTo(email);   
-        message.setSubject("Reset your app.store password");
-        message.setText("""
-                We received a request to reset your app.store password.
-
-                        Open the link below to choose a new password.
-                        This link expires in 15 minutes and can only be used once.
-
-                        %s
-
-                        If you did not request this reset, you can ignore this email.""".formatted(resetLink));
-        mailSender.send(message);
-    }
-
+    
 }
