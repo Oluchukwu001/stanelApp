@@ -12,6 +12,8 @@ public record ProfileRequestDTO(
         String email,
         Role role,
         String gender,
-        String password) {
+        String password,
+        Long companyID
+) {
 
 }

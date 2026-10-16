@@ -15,7 +15,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import stanel.app.store.buyers.StoreOwner;
 import stanel.app.store.cart.Cart;
 import stanel.app.store.order.Order;
 import stanel.app.store.profile.Profile;
@@ -36,7 +35,7 @@ public class Store extends BaseEntity {
     private String address;
     @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn (name = "storeOwner_id")
-    private StoreOwner storeOwner;
+    private Profile storeOwner;
     @OneToMany (mappedBy = "store",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Order> orders;
     
