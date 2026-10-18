@@ -14,7 +14,7 @@ import stanel.app.store.user.enums.Role;
 import stanel.app.store.util.BaseEntity;
 
 @Entity
-@AllArgsConstructor
+@AllArgsConstructor 
 @NoArgsConstructor
 @Getter
 @Setter
