@@ -15,12 +15,15 @@ import stanel.app.store.store.StoreRepository;
 import stanel.app.store.user.User;
 import stanel.app.store.util.ServiceUtil;
 
-
 @Service
-@RequiredArgsConstructor
 public class UpdateProfile {
     private final ProfileRepository profileRespository;
     private final StoreRepository storeRepository;
+
+    public UpdateProfile(ProfileRepository profileRespository, StoreRepository storeRepository) {
+        this.profileRespository = profileRespository;
+        this.storeRepository = storeRepository;
+    }
 
     public Profile updateProfile(Long id, ProfileRequestDTO requestDTO) {
         Profile user = fetchProfileUser(id);

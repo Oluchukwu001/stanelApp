@@ -6,7 +6,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
 import stanel.app.store.cart.Cart;
 import stanel.app.store.order.Order;
 
@@ -18,10 +17,14 @@ import stanel.app.store.util.ServiceUtil;
 import stanel.app.store.util.ValidationUtil;
 
 @Service
-@RequiredArgsConstructor
 public class StoreService {
     private final StoreRepository storeRepository;
-    private final ProfileRepository profileRepository;;
+    private final ProfileRepository profileRepository;
+
+    public StoreService(StoreRepository storeRepository, ProfileRepository profileRepository) {
+        this.storeRepository = storeRepository;
+        this.profileRepository = profileRepository;
+    }
 
     // CREATE STORE AND SETTING CORRESPONDING ATTRIBUTES
     public Store createStore(StoreRequestDTO requestDTO) throws BadRequestException {

@@ -4,18 +4,25 @@ import java.math.BigDecimal;
 
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
+
 import stanel.app.store.cartItem.CartItem;
 import stanel.app.store.product.Product;
 import stanel.app.store.store.Store;
 import stanel.app.store.util.Resolver;
 
-@RequiredArgsConstructor
+
 @Service
 
 public class CartService {
     private final Resolver resolver;
     private final CartRepository cartRepository;
+
+    
+
+    public CartService(Resolver resolver, CartRepository cartRepository) {
+        this.resolver = resolver;
+        this.cartRepository = cartRepository;
+    }
 
     public void addToCart(Long productId, Long storeId) {
         Product product = resolver.resolveProduct(productId);

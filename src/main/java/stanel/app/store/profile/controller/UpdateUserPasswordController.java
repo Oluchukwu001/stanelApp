@@ -9,16 +9,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import stanel.app.store.profile.dto.UpdatePasswordRequestDTO;
 import stanel.app.store.profile.services.UpdateUserPassword;
 
 @RestController
 @RequestMapping("/api/v1/profiles")
-@RequiredArgsConstructor
 public class UpdateUserPasswordController {
 
     private final UpdateUserPassword updateUserPassword;
+
+    public UpdateUserPasswordController(UpdateUserPassword updateUserPassword) {
+        this.updateUserPassword = updateUserPassword;
+    }
 
     @PutMapping("/{profileId}/password")
     @ResponseStatus(HttpStatus.OK)

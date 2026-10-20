@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import lombok.RequiredArgsConstructor;
+
 import stanel.app.store.cartItem.CartItem;
 import stanel.app.store.cartItem.CartItemRepository;
 import stanel.app.store.exception.BadRequestException;
@@ -18,13 +18,22 @@ import stanel.app.store.util.ServiceUtil;
 import stanel.app.store.util.ValidationUtil;
 
 @Service
-@RequiredArgsConstructor
 public class CartServices {
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
     private final StoreRepository storeRepository;
     private final CartItemRepository cartItemRepository;
+
+    
    
+
+    public CartServices(ProductRepository productRepository, CartRepository cartRepository,
+            StoreRepository storeRepository, CartItemRepository cartItemRepository) {
+        this.productRepository = productRepository;
+        this.cartRepository = cartRepository;
+        this.storeRepository = storeRepository;
+        this.cartItemRepository = cartItemRepository;
+    }
 
     @Transactional
     public CartDTO addToCart(CartRequestDTO requestDTO) {

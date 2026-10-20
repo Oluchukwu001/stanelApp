@@ -4,7 +4,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
 import stanel.app.store.profile.Profile;
 import stanel.app.store.profile.ProfileRepository;
 import stanel.app.store.profile.dto.UpdatePasswordRequestDTO;
@@ -12,11 +11,15 @@ import stanel.app.store.user.User;
 import stanel.app.store.util.ServiceUtil;
 import stanel.app.store.util.ValidationUtil;
 
-@Service 
-@RequiredArgsConstructor
+@Service
 public class UpdateUserPassword {
     private final PasswordEncoder passwordEncoder;
     private final ProfileRepository profileRespository;
+
+    public UpdateUserPassword(PasswordEncoder passwordEncoder, ProfileRepository profileRespository) {
+        this.passwordEncoder = passwordEncoder;
+        this.profileRespository = profileRespository;
+    }
 
     public String updateUserPassword(Long profileId, UpdatePasswordRequestDTO requestDTO) {
         validatePasswordUpdateCredentials(profileId, requestDTO.newPassword());
@@ -31,8 +34,8 @@ public class UpdateUserPassword {
 
     }
 
-    private Profile fetchUserProfile(Long profileID){
-        return  ServiceUtil.findOrThrow(profileRespository, profileID, "User Profile");
+    private Profile fetchUserProfile(Long profileID) {
+        return ServiceUtil.findOrThrow(profileRespository, profileID, "User Profile");
     }
 
     private void validatePasswordUpdateCredentials(Long profileId, String newPassword) {
@@ -41,4 +44,3 @@ public class UpdateUserPassword {
     }
 
 }
-

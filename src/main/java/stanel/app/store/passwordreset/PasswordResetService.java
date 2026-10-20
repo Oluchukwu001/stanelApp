@@ -10,21 +10,29 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import lombok.RequiredArgsConstructor;
 import stanel.app.store.profile.Profile;
 import stanel.app.store.profile.ProfileRepository;
 
 @Service 
-@RequiredArgsConstructor 
+
 public class PasswordResetService {
     private final ProfileRepository profileRepository;
     private final PasswordRestRepository passwordResetRepository;
     private final PasswordEncoder passwordEncoder;
-    private final SendPasswordRestLinkService sendPasswordRestLinkService;
-
-    private final SecureRandom secureRandom = new SecureRandom();
-    @Value ("${app.password-reset-url}")
+    private final SendPasswordRestLinkService sendPasswordRestLinkService ;
     private final String passwordResetUrl;
+    
+    private final SecureRandom secureRandom = new SecureRandom();
+
+    public PasswordResetService(ProfileRepository profileRepository, PasswordRestRepository passwordResetRepository, PasswordEncoder passwordEncoder, SendPasswordRestLinkService sendPasswordRestLinkService,@Value ("${app.password-reset-url}")String passwordResetUrl){
+        this.profileRepository = profileRepository;
+        this.passwordResetRepository = passwordResetRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.sendPasswordRestLinkService = sendPasswordRestLinkService;
+        this.passwordResetUrl = passwordResetUrl;
+    }
+    
+
     @Transactional 
     public void forgotPassword(String email){
         Profile profile = profileRepository.findByUser_EmailIgnoreCase(email).orElse(null);

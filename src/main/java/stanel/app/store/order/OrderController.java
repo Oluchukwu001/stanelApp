@@ -4,16 +4,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import lombok.RequiredArgsConstructor;
 import stanel.app.store.orderRetundOrRefund.OrderReturnOrRefund;
 import stanel.app.store.orderRetundOrRefund.OrderReturnOrRefundRequestDTO;
 
 @RestController
 @RequestMapping("/api/v1/orders")
-@RequiredArgsConstructor
+
 public class OrderController {
 
     private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -53,12 +56,11 @@ public class OrderController {
         return orderService.returnOrRefundOrder(requestDTO);
     }
 
-    @GetMapping ("/store_orders")
+    @GetMapping("/store_orders")
     public Page<OrderResponseDTO> getAllStoreOrderByStoreId(
-        @RequestParam Long storeId,
-        @RequestParam (defaultValue = "0")int page,
-        @RequestParam (defaultValue = "10")int size
-    ){
+            @RequestParam Long storeId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         return orderService.getAllStoreOrderByStoreId(storeId, page, size).map(OrderResponseDTO::mapToDTO);
 
     }

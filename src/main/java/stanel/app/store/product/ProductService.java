@@ -7,14 +7,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
 import stanel.app.store.util.ServiceUtil;
 import stanel.app.store.util.ValidationUtil;
 
 @Service
-@RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
     public Product createProduct(ProductRequestDTO requestDTO) {
         validateProductInput(requestDTO);

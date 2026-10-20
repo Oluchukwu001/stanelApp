@@ -5,7 +5,6 @@ import java.time.Instant;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +12,6 @@ import stanel.app.store.profile.Profile;
 import stanel.app.store.util.BaseEntity;
 
 @Entity 
-@AllArgsConstructor 
 @NoArgsConstructor 
 @Getter 
 @Setter 

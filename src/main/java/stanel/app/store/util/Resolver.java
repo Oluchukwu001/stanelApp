@@ -2,7 +2,6 @@ package stanel.app.store.util;
 
 import org.springframework.stereotype.Component;
 
-import lombok.RequiredArgsConstructor;
 import stanel.app.store.exception.BadRequestException;
 import stanel.app.store.product.Product;
 import stanel.app.store.product.ProductRepository;
@@ -10,10 +9,14 @@ import stanel.app.store.store.Store;
 import stanel.app.store.store.StoreRepository;
 
 @Component
-@RequiredArgsConstructor
 public class Resolver {
     private final StoreRepository storeRepository;
     private final ProductRepository productRepository;
+
+    public Resolver(StoreRepository storeRepository, ProductRepository productRepository) {
+        this.storeRepository = storeRepository;
+        this.productRepository = productRepository;
+    }
 
     public Store resolveStore(Long storeId) {
         if (storeId == null)

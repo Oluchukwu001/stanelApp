@@ -15,7 +15,7 @@ import stanel.app.store.product.Product;
 import stanel.app.store.util.BaseEntity;
 
 @Entity 
-@AllArgsConstructor 
+
 @NoArgsConstructor 
 @Setter 
 @Getter 
@@ -31,4 +31,13 @@ public class CartItem extends BaseEntity{
     @ManyToOne 
     @JoinColumn (name = "cart_item_id")
     private Cart cart;
+
+    public CartItem(Product product, Integer quantity, BigDecimal price, Cart cart) {
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
+        this.cart = cart;
+    }
+
+    
 }

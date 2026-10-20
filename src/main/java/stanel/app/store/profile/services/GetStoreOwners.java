@@ -9,11 +9,15 @@ import stanel.app.store.profile.Profile;
 import stanel.app.store.profile.ProfileRepository;
 import stanel.app.store.user.enums.Role;
 
-@Service 
-@RequiredArgsConstructor 
+@Service
 public class GetStoreOwners {
     private final ProfileRepository profileRepository;
-    public List<Profile> execute(){
+
+    public GetStoreOwners(ProfileRepository profileRepository) {
+        this.profileRepository = profileRepository;
+    }
+
+    public List<Profile> execute() {
         return profileRepository.findAllByRole(Role.STOREOWNER);
-    } 
+    }
 }

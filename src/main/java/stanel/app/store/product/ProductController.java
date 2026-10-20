@@ -2,8 +2,6 @@ package stanel.app.store.product;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -12,11 +10,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/product")
-@RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
     private final ProductMapper mapper;
+
+    public ProductController(ProductService productService, ProductMapper mapper) {
+        this.productService = productService;
+        this.mapper = mapper;
+    }
 
     // CREATE PRODUCT
     @PostMapping

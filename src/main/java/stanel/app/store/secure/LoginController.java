@@ -8,15 +8,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import stanel.app.store.user.dtos.Response;
 
 @RestController
 @RequestMapping("/api/v1/user-login")
-@RequiredArgsConstructor
 public class LoginController {
 
     private final LoginService loginService;
+
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)

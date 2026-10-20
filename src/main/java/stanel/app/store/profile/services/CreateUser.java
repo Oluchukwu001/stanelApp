@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
 import stanel.app.store.company.Company;
 import stanel.app.store.company.CompanyRepository;
 import stanel.app.store.exception.BadRequestException;
@@ -18,35 +17,42 @@ import stanel.app.store.util.ServiceUtil;
 import stanel.app.store.util.ValidationUtil;
 
 @Service
-@RequiredArgsConstructor
 public class CreateUser {
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
     private final PasswordEncoder passwordEncoder;
     private final CompanyRepository companyRepository;
 
+    public CreateUser(UserRepository userRepository, ProfileRepository profileRepository,
+            PasswordEncoder passwordEncoder, CompanyRepository companyRepository) {
+        this.userRepository = userRepository;
+        this.profileRepository = profileRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.companyRepository = companyRepository;
+    }
+
     // Get user details
-    public Profile execute(ProfileRequestDTO requestDTO){
-        // Validate Request 
+    public Profile execute(ProfileRequestDTO requestDTO) {
+        // Validate Request
         validateDTO(requestDTO);
-        
-        // Check if Email or Phone Number exist 
-        boolean userExist = userRepository.existsByEmail(requestDTO.email()) || userRepository.existsByPhoneNumber(requestDTO.phoneNumber());
-        if(userExist)
+
+        // Check if Email or Phone Number exist
+        boolean userExist = userRepository.existsByEmail(requestDTO.email())
+                || userRepository.existsByPhoneNumber(requestDTO.phoneNumber());
+        if (userExist)
             throw new BadRequestException("User already exsts");
-        
-        // Hash password 
+
+        // Hash password
         String hashedPassword = passwordEncoder.encode(requestDTO.password());
-        
-        // Create user 
+
+        // Create user
         User user = new User(requestDTO.email(), hashedPassword, requestDTO.role());
 
-
         // create profile and link user and company
-        Profile profile = new Profile(requestDTO.firstName(), requestDTO.lastName(), requestDTO.phoneNumber(),requestDTO.gender(), user, user.getRole(), List.of(),fetchCompany(requestDTO.companyID()));
-        
-       
-        // Save User  
+        Profile profile = new Profile(requestDTO.firstName(), requestDTO.lastName(), requestDTO.phoneNumber(),
+                requestDTO.gender(), user, user.getRole(), List.of(), fetchCompany(requestDTO.companyID()));
+
+        // Save User
         return profileRepository.save(profile);
     }
 
@@ -59,9 +65,9 @@ public class CreateUser {
         ValidationUtil.requireMinLength(requestDTO.password(), 8, "Password should be at least 8 characters");
     }
 
-    private Company fetchCompany(Long companyID){
+    private Company fetchCompany(Long companyID) {
         return ServiceUtil.findOrThrow(companyRepository, companyID, "Company");
-       
+
     }
 
 }

@@ -1,6 +1,5 @@
 package stanel.app.store.company;
 
-
 import java.util.List;
 import java.util.Objects;
 
@@ -10,18 +9,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import lombok.RequiredArgsConstructor;
-
 import stanel.app.store.util.ServiceUtil;
 import stanel.app.store.util.ValidationUtil;
 
 @Service
-@RequiredArgsConstructor
 public class CompanyService {
-    private final  CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
 
-    @Transactional 
-    public Company createCompany(CompanyRequestDTO requestDTO){
+    public CompanyService(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+    }
+
+    @Transactional
+    public Company createCompany(CompanyRequestDTO requestDTO) {
         validateCompanyRequestDTO(requestDTO);
         Company company = new Company();
         company.setName(requestDTO.name());
@@ -32,43 +32,43 @@ public class CompanyService {
         List<String> images = requestDTO.imageUrlList().stream().filter(Objects::nonNull).toList();
         company.setImageUrls(images);
         return companyRepository.save(company);
-        
+
     }
 
-    @Transactional 
-    public Company updateCompany(Long id, CompanyRequestDTO requestDTO){
+    @Transactional
+    public Company updateCompany(Long id, CompanyRequestDTO requestDTO) {
         Company company = ServiceUtil.findOrThrow(companyRepository, id, "Company");
         ServiceUtil.setIfPresent(requestDTO.name(), company::setName);
         ServiceUtil.setIfPresent(requestDTO.address(), company::setAddress);
-        ValidationUtil.requireValidEmail(requestDTO.email(),"Provide a valid email");
+        ValidationUtil.requireValidEmail(requestDTO.email(), "Provide a valid email");
         ServiceUtil.setIfPresent(requestDTO.email(), company::setEmail);
         ServiceUtil.setIfPresent(requestDTO.logo(), company::setLogoUrl);
         ServiceUtil.setIfPresent(requestDTO.phoneNumber(), company::setPhoneNumber);
-        if(!requestDTO.imageUrlList().isEmpty()){
+        if (!requestDTO.imageUrlList().isEmpty()) {
             addImageUrlToExistingOnes(company, requestDTO);
         }
         return companyRepository.save(company);
     }
 
-    @Transactional 
-    public String deleteCompanyById(Long id ){
-        if(!companyRepository.existsById(id)){
-            return "company with id "+ id+ "not found"; 
+    @Transactional
+    public String deleteCompanyById(Long id) {
+        if (!companyRepository.existsById(id)) {
+            return "company with id " + id + "not found";
         }
         return "company successfully deleted";
     }
 
-    @Transactional (readOnly = true)
-    public Company getCompanyById(Long id){
+    @Transactional(readOnly = true)
+    public Company getCompanyById(Long id) {
         return ServiceUtil.findOrThrow(companyRepository, id, "Company");
     }
 
-    @Transactional (readOnly = true)
-    public Page<Company> getAllCompanies(int page, int size){
-        Pageable pageable = PageRequest.of(page,size);
+    @Transactional(readOnly = true)
+    public Page<Company> getAllCompanies(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
         return companyRepository.findAll(pageable);
     }
-    
+
     private void validateCompanyRequestDTO(CompanyRequestDTO requestDTO) {
         ValidationUtil.requireNonBlank(requestDTO.name(), "Name is required");
         ValidationUtil.requireNonBlank(requestDTO.address(), "Address is required");
@@ -79,14 +79,13 @@ public class CompanyService {
         ValidationUtil.requireNotEmpty(requestDTO.imageUrlList(), "Image urls are required");
     }
 
-    private void addImageUrlToExistingOnes(Company company,CompanyRequestDTO requestDTO){
+    private void addImageUrlToExistingOnes(Company company, CompanyRequestDTO requestDTO) {
 
-        
-        for(String url : requestDTO.imageUrlList()){
-            if(!company.getImageUrls().contains(url.trim())&& url!=null){
+        for (String url : requestDTO.imageUrlList()) {
+            if (!company.getImageUrls().contains(url.trim()) && url != null) {
                 company.getImageUrls().add(url);
-            }else{
-                company.getImageUrls().removeIf(el->url.equalsIgnoreCase(el.trim()) && url !=null);
+            } else {
+                company.getImageUrls().removeIf(el -> url.equalsIgnoreCase(el.trim()) && url != null);
                 company.getImageUrls().add(url);
             }
 

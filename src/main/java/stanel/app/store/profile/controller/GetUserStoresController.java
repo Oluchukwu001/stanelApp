@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.RequiredArgsConstructor;
 import stanel.app.store.profile.services.GetUserStores;
 import stanel.app.store.store.StoreMapper;
 import stanel.app.store.store.StoreResponseDTO;
@@ -17,11 +16,17 @@ import stanel.app.store.user.dtos.Response;
 
 @RestController
 @RequestMapping("/api/v1/profiles")
-@RequiredArgsConstructor
 public class GetUserStoresController {
     private final StoreMapper storeMapper;
 
     private final GetUserStores getUserStores;
+    
+
+    public GetUserStoresController(StoreMapper storeMapper, GetUserStores getUserStores) {
+        this.storeMapper = storeMapper;
+        this.getUserStores = getUserStores;
+    }
+
 
     @GetMapping("/{id}/stores")
     @ResponseStatus(HttpStatus.OK)

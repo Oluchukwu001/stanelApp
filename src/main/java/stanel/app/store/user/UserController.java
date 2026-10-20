@@ -10,18 +10,18 @@ import stanel.app.store.profile.dto.ProfileRequestDTO;
 import stanel.app.store.profile.dto.ProfileResponseDTO;
 import stanel.app.store.profile.services.CreateUser;
 
-
 @RestController
 @RequestMapping("/api/v1/users")
-@RequiredArgsConstructor
 public class UserController {
     private final CreateUser createUser;
 
+    public UserController(CreateUser createUser) {
+        this.createUser = createUser;
+    }
 
     @PostMapping
     public ProfileResponseDTO createUser(@RequestBody ProfileRequestDTO requestDTO) {
         return ProfileResponseDTO.mapToDTO(createUser.execute(requestDTO));
     }
-    
 
 }

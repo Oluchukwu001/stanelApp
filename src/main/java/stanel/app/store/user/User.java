@@ -6,7 +6,6 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +13,6 @@ import stanel.app.store.user.enums.Role;
 import stanel.app.store.util.BaseEntity;
 
 @Entity
-@AllArgsConstructor 
 @NoArgsConstructor
 @Getter
 @Setter
@@ -29,4 +27,12 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Role role = Role.STOREOWNER;
+
+    public User(@Email String email, String password, Role role) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+    
 }

@@ -8,21 +8,24 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import lombok.RequiredArgsConstructor;
 import stanel.app.store.user.User;
 
-@RequiredArgsConstructor 
-public class UserDetail implements UserDetails{
+public class UserDetail implements UserDetails {
     private final User user;
+
+    public UserDetail(User user) {
+        this.user = user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_"+user.getRole());
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRole());
         return List.of(authority);
     }
 
     @Override
     public @Nullable String getPassword() {
-       return user.getPassword();
+        return user.getPassword();
     }
 
     @Override
@@ -30,8 +33,8 @@ public class UserDetail implements UserDetails{
         return user.getEmail();
     }
 
-    public User getUser(){
+    public User getUser() {
         return user;
     }
-    
+
 }

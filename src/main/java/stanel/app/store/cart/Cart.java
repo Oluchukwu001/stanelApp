@@ -10,7 +10,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +19,6 @@ import stanel.app.store.util.BaseEntity;
 
 @Entity 
 @Setter 
-@AllArgsConstructor 
 @NoArgsConstructor 
 @Getter 
 public class Cart extends BaseEntity{
@@ -34,5 +32,14 @@ public class Cart extends BaseEntity{
 
     @OneToOne (mappedBy = "cart")
     private Store store;
+
+    public Cart(List<CartItem> cartItems, BigDecimal totalPrice, Integer totalQuantity, Store store) {
+        this.cartItems = cartItems;
+        this.totalPrice = totalPrice;
+        this.totalQuantity = totalQuantity;
+        this.store = store;
+    }
+
+   
     
 }

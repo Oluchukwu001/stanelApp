@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import lombok.RequiredArgsConstructor;
 import stanel.app.store.exception.BadRequestException;
 import stanel.app.store.orderItem.OrderItem;
 import stanel.app.store.cartItem.CartItem;
@@ -25,13 +24,22 @@ import stanel.app.store.store.StoreRepository;
 import stanel.app.store.util.ServiceUtil;
 
 @Service
-@RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderitemRepository orderitemRepository;
     private final StoreRepository storeRepository;
     private final ProductRepository productRepository;
     private final OrderReturnOrRefundRepository orderReturnOrRefundRepository;
+
+    public OrderService(OrderRepository orderRepository, OrderitemRepository orderitemRepository,
+            StoreRepository storeRepository, ProductRepository productRepository,
+            OrderReturnOrRefundRepository orderReturnOrRefundRepository) {
+        this.orderRepository = orderRepository;
+        this.orderitemRepository = orderitemRepository;
+        this.storeRepository = storeRepository;
+        this.productRepository = productRepository;
+        this.orderReturnOrRefundRepository = orderReturnOrRefundRepository;
+    }
 
     @Transactional
     public Order createOrder(OrderRequestDTO requestDTO) {
@@ -49,7 +57,7 @@ public class OrderService {
         order.setTotalQuantity(getTotalQuantity(cartItems));
         order.setTotalPrice(getTotalPrice(cartItems));
         // we Save the order
-        Order savedOrder=orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
         cartItems.clear();
         return savedOrder;
     }

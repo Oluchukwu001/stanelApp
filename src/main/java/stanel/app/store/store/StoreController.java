@@ -14,16 +14,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.RequiredArgsConstructor;
 import stanel.app.store.order.OrderResponseDTO;
 
 @RestController
 @RequestMapping("/api/v1/stores")
-@RequiredArgsConstructor
 public class StoreController {
 
     private final StoreService storeService;
     private final StoreMapper storeMapper;
+
+    public StoreController(StoreService storeService, StoreMapper storeMapper) {
+        this.storeService = storeService;
+        this.storeMapper = storeMapper;
+    }
 
     // CREATE STORE
     @PostMapping
@@ -77,12 +80,11 @@ public class StoreController {
         return storeService.deleteStoreById(id);
     }
 
-    // GET ALL ORDER BELONG TO A PARTICULAR STORE BY PASSING STORE ID 
+    // GET ALL ORDER BELONG TO A PARTICULAR STORE BY PASSING STORE ID
     public Page<OrderResponseDTO> getAllOrdersByStoreId(
-        @RequestParam Long id,
-        @RequestParam (defaultValue = "0") int page,
-        @RequestParam  (defaultValue = "10") int size
-    ){
-        return storeService.getAllStoreOrdersByStoreId(id, page,size);
+            @RequestParam Long id,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return storeService.getAllStoreOrdersByStoreId(id, page, size);
     }
 }

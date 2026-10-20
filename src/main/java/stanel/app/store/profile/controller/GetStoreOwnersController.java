@@ -9,17 +9,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.RequiredArgsConstructor;
 import stanel.app.store.profile.dto.ProfileResponseDTO;
 import stanel.app.store.profile.services.GetStoreOwners;
 import stanel.app.store.user.dtos.Response;
 
 @RestController
 @RequestMapping("/api/v1/storeOwner-profiles")
-@RequiredArgsConstructor
 public class GetStoreOwnersController {
 
     private final GetStoreOwners getStoreOwners;
+    
+
+    public GetStoreOwnersController(GetStoreOwners getStoreOwners) {
+        this.getStoreOwners = getStoreOwners;
+    }
+
 
     @GetMapping("/store-owners")
     @ResponseStatus(HttpStatus.OK)
