@@ -22,7 +22,7 @@ public class User extends BaseEntity {
     @Email
     @Column(unique = true)
     private String email;
-    
+
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -34,5 +34,4 @@ public class User extends BaseEntity {
         this.role = role;
     }
 
-    
 }

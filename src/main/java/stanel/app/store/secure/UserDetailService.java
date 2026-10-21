@@ -3,10 +3,12 @@ package stanel.app.store.secure;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import stanel.app.store.user.User;
 import stanel.app.store.user.UserRepository;
 
+@Service 
 public class UserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
 

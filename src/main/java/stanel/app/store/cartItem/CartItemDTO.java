@@ -19,14 +19,13 @@ public class CartItemDTO {
         cartItemDTO.setQuantity(cartItem.getQuantity());
         return cartItemDTO;
     }
+
     public static List<CartItemDTO> mapAllToDTO(List<CartItem> cartItems) {
         List<CartItemDTO> newCartItemDTOs = new ArrayList<>();
-        for(CartItem cartItem : cartItems) {
+        for (CartItem cartItem : cartItems) {
             newCartItemDTOs.add(mapToDTO(cartItem));
         }
         return newCartItemDTOs;
-        
-        
-    
+
     }
 }

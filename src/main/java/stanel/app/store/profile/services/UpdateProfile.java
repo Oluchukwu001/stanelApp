@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
-import lombok.RequiredArgsConstructor;
+
 import stanel.app.store.profile.Profile;
 import stanel.app.store.profile.ProfileRepository;
 import stanel.app.store.profile.dto.ProfileRequestDTO;

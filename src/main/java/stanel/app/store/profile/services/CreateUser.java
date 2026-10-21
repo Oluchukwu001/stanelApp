@@ -37,8 +37,7 @@ public class CreateUser {
         validateDTO(requestDTO);
 
         // Check if Email or Phone Number exist
-        boolean userExist = userRepository.existsByEmail(requestDTO.email())
-                || userRepository.existsByPhoneNumber(requestDTO.phoneNumber());
+        boolean userExist = userRepository.existsByEmail(requestDTO.email());
         if (userExist)
             throw new BadRequestException("User already exsts");
 
