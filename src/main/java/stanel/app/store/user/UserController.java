@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.RequiredArgsConstructor;
+
 import stanel.app.store.profile.dto.ProfileRequestDTO;
 import stanel.app.store.profile.dto.ProfileResponseDTO;
 import stanel.app.store.profile.services.CreateUser;

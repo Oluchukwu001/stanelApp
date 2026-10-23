@@ -79,16 +79,27 @@ public class CompanyService {
         ValidationUtil.requireNotEmpty(requestDTO.imageUrlList(), "Image urls are required");
     }
 
-    private void addImageUrlToExistingOnes(Company company, CompanyRequestDTO requestDTO) {
+    private void addImageUrlToExistingOnes(
+            Company company,
+            CompanyRequestDTO requestDTO) {
 
         for (String url : requestDTO.imageUrlList()) {
-            if (!company.getImageUrls().contains(url.trim()) && url != null) {
-                company.getImageUrls().add(url);
-            } else {
-                company.getImageUrls().removeIf(el -> url.equalsIgnoreCase(el.trim()) && url != null);
-                company.getImageUrls().add(url);
+
+            if (url == null || url.isBlank()) {
+                continue;
             }
 
+            String cleanedUrl = url.trim();
+
+            boolean alreadyExists = company.getImageUrls()
+                    .stream()
+                    .filter(Objects::nonNull)
+                    .map(existingUrl -> existingUrl.trim())
+                    .anyMatch(existingUrl -> existingUrl.equalsIgnoreCase(cleanedUrl));
+
+            if (!alreadyExists) {
+                company.getImageUrls().add(cleanedUrl);
+            }
         }
     }
 

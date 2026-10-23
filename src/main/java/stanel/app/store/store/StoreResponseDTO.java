@@ -5,7 +5,8 @@ public record StoreResponseDTO(
     String name,
     String phoneNumber,
     String email,
-    String address
+    String address,
+    Long storeOwnerId
 ) {
     
 }

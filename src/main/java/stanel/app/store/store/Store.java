@@ -41,12 +41,10 @@ public class Store extends BaseEntity {
     @JoinColumn(name = "store_cart_id")
     private Cart cart;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id")
-    private Profile profile;
+
 
     public Store(String name, @Email String email, String phoneNumber, String address, Profile storeOwner,
-            List<Order> orders, Cart cart, Profile profile) {
+            List<Order> orders, Cart cart) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -54,7 +52,6 @@ public class Store extends BaseEntity {
         this.storeOwner = storeOwner;
         this.orders = orders;
         this.cart = cart;
-        this.profile = profile;
     }
 
 }

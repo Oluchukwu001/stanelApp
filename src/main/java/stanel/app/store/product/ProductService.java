@@ -48,6 +48,7 @@ public class ProductService {
         if (!productRepository.existsById(id)) {
             return "Product with id " + id + " not found";
         }
+        
         productRepository.deleteById(id);
         return "Product with id " + id + " was successfully deleted";
     }

@@ -32,7 +32,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        String token = authHeader.substring("Bearer  ".length());
+        String token = authHeader.substring("Bearer ".length());
         String email;
         try {
             email = jwtService.extractEmails(token);

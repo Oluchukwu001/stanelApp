@@ -57,4 +57,10 @@ app:
       gender: MALE
       password: Admin@1234
       company-name: Stanel HQ
+    logging:
+  level:
+    stanel.app.store.secure: TRACE              # your JwtAuthFilter package
+    org.springframework.security: DEBUG
+    org.springframework.security.web.FilterChainProxy: DEBUG
+    org.springframework.security.web.authentication: DEBUG
   password-reset-url: ${PASSWORD_RESET_URL:http://localhost:3000/reset-password}
